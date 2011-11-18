@@ -1,0 +1,39 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+group = 'plweb'
+version = '0.0.1'
+description = ''
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	groovy 'org.codehaus.groovy:groovy-all:1.8.3'
+	/*compile ('org.codehaus.groovy.modules.http-builder:http-builder:0.5.1')  {
+		exclude group: 'org.codehaus.groovy', modules: 'groovy'
+	}*/
+	runtime 'log4j:log4j:1.2.16'
+	compile 'net.sf.jedit-syntax:jedit-syntax:2.2.2'
+	compile files('lib/swt-3.7.1-macosx-x86_64.jar')
+	testCompile 'org.spockframework:spock-core:0.5-groovy-1.8'
+}
+
+def defaultEncoding = 'UTF-8'
+
+[compileJava, compileTestJava]*.options*.encoding = defaultEncoding
+[compileGroovy, compileTestGroovy]*.options*.encoding = defaultEncoding
+[compileGroovy, compileTestGroovy]*.groovyOptions*.encoding = defaultEncoding
+
+task (runSimple, dependsOn: 'classes', type: JavaExec) {
+	classpath = sourceSets.main.runtimeClasspath
+	main = 'org.plweb.desktop.AppLoader'
+	//jvmArgs = ['-XstartOnFirstThread -Xdock:name=PLWeb']
+	jvmArgs = ['-XstartOnFirstThread', '-Xdock:name=PLWeb']
+}
+
+defaultTasks 'runSimple'
