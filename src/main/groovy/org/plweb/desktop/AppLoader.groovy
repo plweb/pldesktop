@@ -45,7 +45,8 @@ class AppLoader {
 		});
 
 		shell.open()	
-		browser.url = 'http://cloud.plweb.org/'
+		//browser.url = 'http://cloud.plweb.org/'
+		browser.url = 'http://www.whatismybrowser.com/'
 
 		while (!shell.isDisposed()) {
 			if (!display.readAndDispatch()) {
